@@ -8,12 +8,27 @@ public class TestSpring {
                 "applicationContext.xml"
         );
 
-        Music musicClassical = context.getBean("classicalMusicBean",Music.class);
-        Music musicRock = context.getBean("rockMusicBean",Music.class);
-        MusicPlayer musicClassicalPlayer = new MusicPlayer(musicClassical);
-        MusicPlayer musicRckPlayer = new MusicPlayer(musicRock);
-        musicClassicalPlayer.playMusic();
-        musicRckPlayer.playMusic();
+//        ClassicalMusic classicalMusic = context.getBean("classicMusicBean",ClassicalMusic.class);
+//        System.out.println(classicalMusic.getSong());
+
+        MusicPlayer firstMusicPlayer = context.getBean("musicPlayer",MusicPlayer.class);
+        MusicPlayer secondMusicPlayer = context.getBean("musicPlayer",MusicPlayer.class);
+
+        boolean comparasion = secondMusicPlayer==firstMusicPlayer;//разные ссылки!
+
+        firstMusicPlayer.setVolume(10);
+
+//        System.out.println(firstMusicPlayer);//разные hashCode из-за scope="property"
+//        System.out.println(secondMusicPlayer);
+
+        System.out.println(firstMusicPlayer.getVolume());//т.к указан scope="property" значение изменилос только у first
+        System.out.println(secondMusicPlayer.getVolume());
+
+//        musicPlayer.playMusic();
+//        System.out.println(musicPlayer.getName());
+//        System.out.println(musicPlayer.getVolume());
+
         context.close();
     }
+
 }
