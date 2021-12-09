@@ -1,15 +1,24 @@
 package ru.alishev.springAlishev;
 
+import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Component
 public class RockMusic implements Music {
-    public void doMyInit(){
-        System.out.println("Do my initialization rock");
+    private List<String> rockMus;
+    public RockMusic() {
+        rockMus = new ArrayList<>();
+        rockMus.add("mus1Rock");
+        rockMus.add("mus2Rock");
+        rockMus.add("mus3Rock");
     }
 
-    public void doMyDestroy(){
-        System.out.println("Do my destruction rock");
-    }
+
+
     @Override
-    public String getSong(){
-        return "rock music  ";
+    public List<String> getSong() {
+        return rockMus;
     }
 }

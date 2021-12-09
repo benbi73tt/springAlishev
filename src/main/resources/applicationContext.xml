@@ -7,41 +7,6 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:property-placeholder location="classpath:musicPlayer.properties"/>
+    <context:component-scan base-package="ru.alishev.springAlishev"/>
 
-    <bean id="classicMusicBean"
-          class="ru.alishev.springAlishev.ClassicalMusic"
-          init-method="doMyInit" destroy-method="doMyDestroy" factory-method="getClassicalMusic">
-        <!--Когда будет создавать, будет создавать объект через factory-method
-            Но независимо от scope все равно всегда будет ссылка-->
-    </bean>
-    <bean id="rockMusicBean"
-          class="ru.alishev.springAlishev.RockMusic"
-          init-method="doMyInit" destroy-method="doMyDestroy">
-    </bean>
-    <bean id="popMusicBean"
-          class="ru.alishev.springAlishev.PopMusic"
-          scope="prototype"
-          init-method="doMyInit" destroy-method="doMyDestroy">
-        <!--Из-за scope: Каждый раз вызывается init, но никогда не вызывется destroy-->
-    </bean>
-
-    <bean id="musicPlayer"
-          class="ru.alishev.springAlishev.MusicPlayer"
-          scope="prototype"> <!-- для того что при создании объекта создавался действительно новый объект,
-           а не ссылка на один и тот же-->
-
-        <!-- <constructor-arg ref="musicBean"/>--><!-- для конструкторов-->
-        <property name="musicList">
-            <list>
-                <ref bean ="rockMusicBean"/>
-                <ref bean ="classicMusicBean"/>
-                <ref bean ="popMusicBean"/>
-            </list>
-        </property><!--name - название метода (без set,get и тд)-->
-        <property name="name" value="${musicPlayer.name}"/>
-        <property name="volume" value="${musicPlayer.volume}"/>
-    </bean>
-
-
-</beans>
+ </beans>

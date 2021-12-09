@@ -1,46 +1,47 @@
 package ru.alishev.springAlishev;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
-public class MusicPlayer {
-    private List<Music> musicList  = new ArrayList();
+import java.util.Random;
 
-    private String name;
-    private int volume;
+@Component
+public class  MusicPlayer {
+     private Music music1;
+    private Music music2;
 
 
-    public List<Music> getMusicList() {
-        return musicList;
+    @Autowired
+//    @Qualifier("rockMusic") //Если существует два бина подходящих, можно использовать уточнение
+//    public void setMusic(Music classicalMusic, Music rockMusic) { //можно еще так присвоить бины...
+    public void setMusic(@Qualifier("rockMusic") Music music1,@Qualifier("classicalMusic") Music music2) {
+        this.music1 = music1;
+        this.music2 = music2;
+//      this.music1 = classicalMusic;
+//      this.music2 = rockMusic; //и вот так их вызвать
     }
 
-    public void setMusicList(List<Music> musicList) {
-        this.musicList = musicList;
+    private MusicPlayer() {
     }
+//    public MusicPlayer(Music music) {
+//        this.music = music;
+//    }
+//
+//    @Autowired
+//    public void setMusic(Music music) {
+//        this.music = music;
+//    }
 
-    public String getName() {
-        return name;
-    }
+    public String playMusic(MusicGenre genre) {
+        Random random = new Random();
+        int rand = random.nextInt(3);
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getVolume() {
-        return volume;
-    }
-
-    public void setVolume(int volume) {
-        this.volume = volume;
-    }
-
-    //IoC
-
-    public MusicPlayer(){}
-
-    public void playMusic(){
-        for(Music music : musicList) {
-            System.out.println("Playing: " + music.getSong());
+        if(genre == MusicGenre.CLASSICAL){
+            return "Playing " + music1.getSong().get(rand)+"\n";
+        }
+        else {
+            return "Playing " + music2.getSong().get(rand)+"\n";
         }
     }
 }

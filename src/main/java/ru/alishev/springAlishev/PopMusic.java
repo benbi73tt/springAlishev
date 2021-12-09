@@ -1,16 +1,25 @@
 package ru.alishev.springAlishev;
 
+import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Component
 public class PopMusic implements Music {
-    public void doMyInit(){
-        System.out.println("Do my initialization pop");
+    private List<String> popMus;
+    public PopMusic() {
+        popMus = new ArrayList<>();
+        popMus.add("mus1Pop");
+        popMus.add("mus2Pop");
+        popMus.add("mus3Pop");
     }
 
-    public void doMyDestroy(){
-        System.out.println("Do my destruction pop");
-    }
+
+
     @Override
-    public String getSong(){
-        return "pop music";
+    public List<String> getSong() {
+        return popMus;
     }
 }
 
